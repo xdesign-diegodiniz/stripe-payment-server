@@ -85,9 +85,10 @@ app.post("/payment-sheet", async (req, res) => {
     const paymentIntent = await stripe.paymentIntents.create({
       amount: amount || 1099,
       currency: currency || "gbp",
-      customer: customer.id,
-      payment_method: paymentMethod.id,
-      setup_future_usage: "off_session",
+      // customer: customer.id,
+      // payment_method: paymentMethod.id,
+      // setup_future_usage: "off_session",
+      // commented out for for saved card
     });
 
     const customerPaymentMethod = await stripe.paymentMethods.attach(
@@ -101,8 +102,8 @@ app.post("/payment-sheet", async (req, res) => {
       paymentIntent: paymentIntent.client_secret,
       ephemeralKey: ephemeralKey.secret,
       customer: customer.id,
-      paymentMethod: paymentMethod.id,
-      customerPaymentMethod: customerPaymentMethod,
+      // paymentMethod: paymentMethod.id,
+      // customerPaymentMethod: customerPaymentMethod,
     });
   } catch (err) {
     console.error(`Error: ${err.message}`);
